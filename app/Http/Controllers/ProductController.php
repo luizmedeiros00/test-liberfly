@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -21,8 +23,7 @@ class ProductController extends Controller
      *      description="Returns list of products",
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/ProjectResource")
+     *          description="Successful operation"
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -38,7 +39,8 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        return response($products);
+        return (new ProductCollection($products))
+            ->response();
     }
 
     /**
@@ -59,12 +61,7 @@ class ProductController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Project")
      *       ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad Request"
-     *      ),
      *      @OA\Response(
      *          response=401,
      *          description="Unauthenticated",
@@ -77,6 +74,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return response($product);
+        return (new ProductResource($product))
+            ->response();
     }
 }
