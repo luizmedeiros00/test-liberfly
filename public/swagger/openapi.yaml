@@ -1,0 +1,12 @@
+openapi: 3.0.0
+paths:
+  /api/products:
+    get:
+      tags:
+        - products
+      summary: 'Returns a list of products'
+      description: 'Returns a array of products'
+      operationId: 1bfaa78d1c2c3848ab8165c5dadcad3e
+      responses:
+        '200':
+          description: 'A list with products'
